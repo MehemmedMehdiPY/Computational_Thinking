@@ -9,9 +9,9 @@ def get_score(decision_variables):
     # Constant weights
     Ft = 20
     ps1 = 5
-    ps2 = 20
-    ps3 = 93
-    ps4 = 8
+    ps2 = 2
+    ps3 = 5
+    ps4 = 839
     ps5 = 9
 
     # Scoring
@@ -38,7 +38,7 @@ def RollOverSlow(decision_variables):
             decision_variables_copy[i] = 10
 
             score_from_branch, decision_variables_from_branch = RollOverSlow(decision_variables_copy)
-            if score <= score_from_branch:
+            if sum(decision_variables_optimized) < 20 or score <= score_from_branch:
                 score = score_from_branch
                 decision_variables_optimized = decision_variables_from_branch
             
@@ -65,7 +65,7 @@ def RollOverIndexing(decision_variables, idxs = [0, 1, 2, 3, 4]):
         idxs_copy.remove(idx)
 
         score_from_branch, decision_variables_from_branch = RollOverIndexing(decision_variables_copy, idxs_copy)
-        if score <= score_from_branch:
+        if sum(decision_variables_optimized) < 20 or score <= score_from_branch:
             score = score_from_branch
             decision_variables_optimized = decision_variables_from_branch
     return score, decision_variables_optimized
@@ -83,3 +83,4 @@ if __name__ == "__main__":
     print("RollOver solution with Indexing:")
     print(score, variables)
 
+    
