@@ -5,8 +5,11 @@ The repository aims to develop algorithms to different problems introduced in MI
 
 File hierarchy:
 ./
+
 --- readme.md
+
 --- roll_over.py
+
 --- timeit_eval.py
 
 
