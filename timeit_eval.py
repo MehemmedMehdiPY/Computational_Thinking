@@ -1,21 +1,26 @@
 """
 ---------- DESCRIPTION ----------
 
-The code to store the 4 variants of Roll-over solutions.
+The code to check the performance of 4 variants of Roll-over solutions.
 
+Results:
+    Roll-over slow: 7.471227007999914
+    Roll-over indexing: 6.754745763000301
+    Roll-over memorization V1: 1.6611088949998702
+    Roll-over memorization V2: 1.4664391030000843
 """
 
-def get_score(decision_variables):
-    """The function to return score for given decision variables"""
-    # Constant weights
+
+
+from timeit import timeit
+
+rolloverslow = """def get_score(decision_variables):
     Ft = 20
     ps1 = 5
     ps2 = 2
     ps3 = 5
     ps4 = 839
     ps5 = 9
-
-    # Scoring
     score = (60 - sum(decision_variables)) * Ft + (
         decision_variables[0] * ps1 + decision_variables[1] * ps2 + 
         decision_variables[2] * ps3 + decision_variables[3] * ps4 + 
@@ -24,7 +29,6 @@ def get_score(decision_variables):
     return score
 
 def RollOverSlow(decision_variables):
-    """Recursive function for solving Roll-over problem"""
     score = get_score(decision_variables)
     
     if decision_variables == [10, 10, 10, 10, 10]:
@@ -44,15 +48,23 @@ def RollOverSlow(decision_variables):
             
     return score, decision_variables_optimized
 
+RollOverSlow([0, 0, 0, 0, 0])"""
+
+rolloverindexing = """def get_score(decision_variables):
+    Ft = 20
+    ps1 = 5
+    ps2 = 2
+    ps3 = 5
+    ps4 = 839
+    ps5 = 9
+    score = (60 - sum(decision_variables)) * Ft + (
+        decision_variables[0] * ps1 + decision_variables[1] * ps2 + 
+        decision_variables[2] * ps3 + decision_variables[3] * ps4 + 
+        decision_variables[4] * ps5
+        )
+    return score
 
 def RollOverIndexing(decision_variables, idxs = [0, 1, 2, 3, 4], count = 0):
-    """
-    I didn't check if this really works faster. I believe it should not be so different. The reason is the use of 
-    remove function that actually implements additional looping.
-
-
-    The above was my initial comment. Later, I checked that it actually improved performance.
-    """
     score = get_score(decision_variables)
     
     if decision_variables == [10, 10, 10, 10, 10]:
@@ -73,12 +85,24 @@ def RollOverIndexing(decision_variables, idxs = [0, 1, 2, 3, 4], count = 0):
             decision_variables_optimized = decision_variables_from_branch
     return score, decision_variables_optimized
 
+RollOverIndexing([0, 0, 0, 0, 0])
+"""
+
+rollovermemov1 = """def get_score(decision_variables):
+    Ft = 20
+    ps1 = 5
+    ps2 = 2
+    ps3 = 5
+    ps4 = 839
+    ps5 = 9
+    score = (60 - sum(decision_variables)) * Ft + (
+        decision_variables[0] * ps1 + decision_variables[1] * ps2 + 
+        decision_variables[2] * ps3 + decision_variables[3] * ps4 + 
+        decision_variables[4] * ps5
+        )
+    return score
 
 def RollOverMemoV1(decision_variables, idxs = [0, 1, 2, 3, 4], memo = {}):
-    """
-    Memorization-integrated V1 solution (dynamic programming) 
-    """
-    
     decision_variables_tuple = tuple(decision_variables)
     if decision_variables_tuple in memo.keys():
         return memo[decision_variables_tuple], decision_variables
@@ -106,12 +130,24 @@ def RollOverMemoV1(decision_variables, idxs = [0, 1, 2, 3, 4], memo = {}):
             decision_variables_optimized = decision_variables_from_branch
     return score, decision_variables_optimized
 
+RollOverMemoV1([0, 0, 0, 0, 0])    
+"""
+
+rollovermemov2 = """def get_score(decision_variables):
+    Ft = 20
+    ps1 = 5
+    ps2 = 2
+    ps3 = 5
+    ps4 = 839
+    ps5 = 9
+    score = (60 - sum(decision_variables)) * Ft + (
+        decision_variables[0] * ps1 + decision_variables[1] * ps2 + 
+        decision_variables[2] * ps3 + decision_variables[3] * ps4 + 
+        decision_variables[4] * ps5
+        )
+    return score
 
 def RollOverMemoV2(decision_variables, idxs = [0, 1, 2, 3, 4], memo = {}):
-    """
-    Memorization-integrated V2 solution (dynamic programming). Recursive calls are slightly reduced.
-    """
-
     score = get_score(decision_variables)
     
     decision_variables_tuple = tuple(decision_variables)
@@ -141,20 +177,11 @@ def RollOverMemoV2(decision_variables, idxs = [0, 1, 2, 3, 4], memo = {}):
             decision_variables_optimized = decision_variables_from_branch
     return score, decision_variables_optimized
 
+RollOverMemoV2([0, 0, 0, 0, 0])
+"""
 
-if __name__ == "__main__":
-    score, variables = RollOverSlow([0, 0, 0, 0, 0])
-    print("First version of RollOver solution:")
-    print(score, variables)
-
-    score, variables = RollOverIndexing([0, 0, 0, 0, 0])
-    print("RollOver solution with Indexing:")
-    print(score, variables)
-
-    score, variables = RollOverMemoV1([0, 0, 0, 0, 0])
-    print("RollOver solution with memorization V1:")
-    print(score, variables)
-
-    score, variables = RollOverMemoV2([0, 0, 0, 0, 0])
-    print("RollOver solution with memorization V2:")
-    print(score, variables)
+number = 10000
+print("Roll-over slow:", timeit(rolloverslow, number=number))
+print("Roll-over indexing:", timeit(rolloverindexing, number=number))
+print("Roll-over memorization V1:", timeit(rollovermemov1, number=number))
+print("Roll-over memorization V2:", timeit(rollovermemov2, number=number))
