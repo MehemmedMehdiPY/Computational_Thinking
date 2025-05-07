@@ -27,15 +27,16 @@ def DFS(node_start, node_end, graph, path = [], shortest_path = None):
                 shortest_path = path_from_branch
     return shortest_path
 
-graph = {
-    0: [1, 2, 6], 
-    1: [3, 6], 
-    2: [1, 0], 
-    3: [2, 5], 
-    4: [5], 
-    5: [0, 4], 
-    6: [5],
-    7: [], 
-}
+if __name__ == "__main__":
+    graph = {
+        0: [1, 2, 6], 
+        1: [3, 6], 
+        2: [1, 0], 
+        3: [2, 5], 
+        4: [5], 
+        5: [0, 4], 
+        6: [5],
+        7: [], 
+    }
 
-print(DFS(7, 0, graph))
+    print(DFS(7, 0, graph))
