@@ -92,7 +92,6 @@ class array(array_):
         return sum([col[i] * row[i] for i in range(len(col))])
 
 
-print('salam')
 if __name__ == "__main__":
 
     print(type(array))
